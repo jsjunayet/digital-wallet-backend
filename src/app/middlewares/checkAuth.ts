@@ -4,7 +4,7 @@ import { envVars } from "../config/env";
 import AppError from "../errorHelpers/AppError";
 // import { verifyToken } from "../utils/jwt";
 import httpStatus from "http-status-codes";
-import { agentStatus, Role, Status } from "../modules/user/user.interface";
+import { Status } from "../modules/user/user.interface";
 import { User } from "../modules/user/user.model";
 import { verifyToken } from "../utils/jwt";
 
@@ -22,8 +22,10 @@ export const checkAuth =
         accessToken,
         envVars.JWT_ACCESS_SECRET
       ) as JwtPayload;
-
-      const isUserExist = await User.findOne({ email: verifiedToken.email });
+      console.log(verifiedToken);
+      const isUserExist = await User.findOne({
+        email: verifiedToken.email,
+      });
 
       if (!isUserExist) {
         throw new AppError(httpStatus.BAD_REQUEST, "User does not exist");
@@ -43,9 +45,10 @@ export const checkAuth =
       }
 
       // ✅ Agent must be approved
+      console.log(isUserExist, "useriss");
       if (
-        isUserExist.role === Role.AGENT &&
-        isUserExist.status !== agentStatus.APPROVED
+        isUserExist.role === "AGENT" &&
+        isUserExist.agentstatus !== "approved"
       ) {
         throw new AppError(
           httpStatus.FORBIDDEN,
