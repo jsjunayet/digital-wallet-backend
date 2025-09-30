@@ -1,12 +1,13 @@
-import httpStatus from "http-status-codes";
 import { Request, Response } from "express";
+import httpStatus from "http-status-codes";
+import AppError from "../../errorHelpers/AppError";
 import { catchAsync } from "../../utils/catchAsync";
-import { AuthServices } from "./auth.service";
 import { sendResponse } from "../../utils/sendResponse";
 import { setAuthCookie } from "../../utils/setCookie";
-import AppError from "../../errorHelpers/AppError";
+import { AuthServices } from "./auth.service";
 
 const authLogin = catchAsync(async (req: Request, res: Response) => {
+  console.log(req.body, "fjdas");
   const loginInfo = await AuthServices.authLogin(req.body);
   console.log("login info", loginInfo);
   setAuthCookie(res, loginInfo);

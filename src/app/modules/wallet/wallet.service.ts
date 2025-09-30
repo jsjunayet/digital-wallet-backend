@@ -57,7 +57,7 @@ const updateWallet = async (id: string, payload: Partial<IWallet>) => {
   const filteredPayload: Partial<IWallet> = {};
   for (const key of allowedFields) {
     if (key in payload) {
-      filteredPayload[key] = payload[key];
+      (filteredPayload as any)[key] = payload[key];
     }
   }
   const updatedWallet = await Wallet.findByIdAndUpdate(id, payload, {

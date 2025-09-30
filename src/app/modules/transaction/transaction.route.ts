@@ -27,7 +27,7 @@ router.post(
   TransactionController.cashOut
 );
 router.get(
-  "/",
+  "/all",
   checkAuth(Role.ADMIN, Role.SUPER_ADMIN),
   TransactionController.getAllTransaction
 );

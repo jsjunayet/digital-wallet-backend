@@ -1,5 +1,5 @@
 import { model, Schema } from "mongoose";
-import { IUser, Role, Status } from "./user.interface";
+import { agentStatus, IUser, Role, Status } from "./user.interface";
 
 const userSchema = new Schema<IUser>(
   {
@@ -13,8 +13,8 @@ const userSchema = new Schema<IUser>(
     },
     agentstatus: {
       type: String,
-      enum: ["pending", "approved", "suspended"],
-      default: "pending",
+      enum: Object.values(agentStatus), // ✅ use enum values
+      default: agentStatus.PENDING, // ✅ use enum default
     },
     status: {
       type: String,

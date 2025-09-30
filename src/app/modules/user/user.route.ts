@@ -14,12 +14,12 @@ router.post(
 );
 router.get(
   "/all-users",
-  checkAuth(Role.ADMIN, Role.SUPER_ADMIN),
+  checkAuth(...Object.values(Role)),
   UserControllers.getAllUsers
 );
 router.get(
   "/all-agents",
-  checkAuth(Role.ADMIN, Role.SUPER_ADMIN),
+  checkAuth(...Object.values(Role)),
   UserControllers.getAllAgents
 );
 // router.get(
@@ -33,10 +33,27 @@ router.patch(
   checkAuth(Role.ADMIN, Role.SUPER_ADMIN),
   UserControllers.actionUser
 );
+router.get(
+  "/user/me",
+  checkAuth(...Object.values(Role)),
+  UserControllers.getMe
+);
 router.patch(
   "/agents/:id",
   checkAuth(Role.ADMIN, Role.SUPER_ADMIN),
   UserControllers.agenApproved
 );
+router.post(
+  "/change-password",
+  checkAuth(...Object.values(Role)),
+  UserControllers.changePassword
+);
+router.patch(
+  "/profile-edit/edit",
+  checkAuth(...Object.values(Role)),
+  UserControllers.UserProfileUpdate
+);
+router.get("/chart-data", UserControllers.getChartData);
+router.get("/stats", UserControllers.getAdminStats);
 
 export const UserRoutes = router;

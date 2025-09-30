@@ -7,7 +7,7 @@ const router = express.Router();
 // router.post("/", WalletController.createWallet);
 router.get(
   "/",
-  checkAuth(Role.ADMIN, Role.SUPER_ADMIN),
+  checkAuth(Role.ADMIN, Role.SUPER_ADMIN, Role.AGENT),
   WalletController.getAllWallet
 );
 router.get(

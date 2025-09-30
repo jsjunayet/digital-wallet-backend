@@ -64,8 +64,19 @@ const actionUser = catchAsync(async (req: Request, res: Response) => {
     data: user,
   });
 });
+const getMe = catchAsync(async (req: Request, res: Response) => {
+  const id = req?.user?.id;
+  const result = await UserServices.getMe(id);
+  sendResponse(res, {
+    success: true,
+    statusCode: httpStatus.CREATED,
+    message: "User Retrieved Successfully",
+    data: result,
+  });
+});
 const agenApproved = catchAsync(async (req: Request, res: Response) => {
   const payload = req.body;
+  console.log(payload, "fdjfasjfds");
 
   const result = await UserServices.agenApproved(req.params.id, payload);
   sendResponse(res, {
@@ -75,7 +86,48 @@ const agenApproved = catchAsync(async (req: Request, res: Response) => {
     data: result,
   });
 });
+const changePassword = catchAsync(async (req: Request, res: Response) => {
+  const payload = req.body;
 
+  const result = await UserServices.changePassword(req.user, payload);
+  sendResponse(res, {
+    statusCode: 200,
+    success: true,
+    message: "Sucessfull Password Change",
+    data: result,
+  });
+});
+const UserProfileUpdate = catchAsync(async (req: Request, res: Response) => {
+  const payload = req.body;
+
+  const result = await UserServices.UserProfileUpdate(req.user.id, payload);
+  sendResponse(res, {
+    statusCode: 200,
+    success: true,
+    message: "Your Wallet is deleted",
+    data: result,
+  });
+});
+const getChartData = catchAsync(async (req, res) => {
+  const result = await UserServices.getChartData();
+
+  sendResponse(res, {
+    statusCode: 200,
+    success: true,
+    message: "Chart data fetched successfully",
+    data: result,
+  });
+});
+const getAdminStats = catchAsync(async (req, res) => {
+  const result = await UserServices.getAdminStats();
+
+  sendResponse(res, {
+    statusCode: 200,
+    success: true,
+    message: "Admin stats fetched successfully",
+    data: result,
+  });
+});
 export const UserControllers = {
   createUser,
   getAllUsers,
@@ -83,4 +135,9 @@ export const UserControllers = {
   actionUser,
   agenApproved,
   getAllAgents,
+  getMe,
+  changePassword,
+  UserProfileUpdate,
+  getChartData,
+  getAdminStats,
 };
